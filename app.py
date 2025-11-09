@@ -315,7 +315,7 @@ def api_chat():
         )
 
         resp = client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
+            model=model=model_id,
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_message},
