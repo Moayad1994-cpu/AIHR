@@ -315,7 +315,7 @@ def api_chat():
         )
 
         resp = client.chat.completions.create(
-            model=model_id,
+            model="llama-3.3-70b-versatile",
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_message},
@@ -323,7 +323,13 @@ def api_chat():
             temperature=0.4,
             top_p=0.9,
             max_tokens=512,
+            stream=True
+            stop=None
         )
+        )
+
+for chunk in completion:
+    print(chunk.choices[0].delta.content or "", end="")
 
         text = (resp.choices[0].message.content if resp and getattr(resp, "choices", None) else "") or ""
         if not text:
