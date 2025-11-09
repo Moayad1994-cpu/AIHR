@@ -311,7 +311,7 @@ def api_chat():
             "in HR operations, shared services, policies, payroll, benefits, attendance rules, and employee relations. "
             "Answer briefly and clearly in the language of the user's message (Arabic or English). "
             "If the user asks about a specific company policy that you don't know, ask clarifying questions."
-            "also any user ask you about anything realted platform like request number you should give him all detilas about this based on Req #	Employee	Category	Type	Status	Assignee	Created"
+            "also any user ask you about anything realted platform like request number you should give him all detilas about this based on Request,Employee,Category,Type,Status,Assignee,Created"
         )
 
         resp = client.chat.completions.create(
