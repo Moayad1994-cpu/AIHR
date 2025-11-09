@@ -311,11 +311,11 @@ def api_chat():
             "in HR operations, shared services, policies, payroll, benefits, attendance rules, and employee relations. "
             "Answer briefly and clearly in the language of the user's message (Arabic or English). "
             "If the user asks about a specific company policy that you don't know, ask clarifying questions."
-            "also any user ask you about anything realted platform like request number you should give him all detilas about this based on Request,Employee,Category,Type,Status,Assignee,Created"
+            "also any user ask you about anything realted platform like request number you should give him all detilas about this based on Req #	Employee	Category	Type	Status	Assignee	Created"
         )
 
         resp = client.chat.completions.create(
-            model=model=model_id,
+            model="llama-3.3-70b-versatile",
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_message},
@@ -323,13 +323,7 @@ def api_chat():
             temperature=0.4,
             top_p=0.9,
             max_tokens=512,
-            stream=True
-            stop=None
         )
-        )
-
-for chunk in completion:
-    print(chunk.choices[0].delta.content or "", end="")
 
         text = (resp.choices[0].message.content if resp and getattr(resp, "choices", None) else "") or ""
         if not text:
