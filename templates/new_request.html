@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 data-i18n="new.title">New Request</h2>
+<form method="post" enctype="multipart/form-data" class="form">
+  <div class="grid-2">
+    <label>
+      <span data-i18n="new.employee_id">Employee ID</span>
+      <input type="text" name="employee_id" required>
+    </label>
+    <label>
+      <span data-i18n="new.employee_name">Employee Name</span>
+      <input type="text" name="employee_name" required>
+    </label>
+    <label>
+      <span data-i18n="new.cluster">Cluster</span>
+      <input type="text" name="cluster">
+    </label>
+    <label>
+      <span data-i18n="new.department">Department</span>
+      <input type="text" name="department">
+    </label>
+    <label>
+      <span data-i18n="new.category">Category</span>
+      <select name="category" required>
+        {% for c in categories %}
+        <option value="{{ c }}">{{ c }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>
+      <span data-i18n="new.request_type">Request Type</span>
+      <input type="text" name="request_type" placeholder="e.g., Salary Certificate / Update Photo">
+    </label>
+  </div>
+  <label class="full">
+    <span data-i18n="new.details">Request Details / Notes</span>
+    <textarea name="details" rows="5" required></textarea>
+  </label>
+  <label class="full">
+    <span data-i18n="new.attachments">Attachments</span>
+    <input type="file" name="attachments" multiple>
+  </label>
+  <button class="btn primary" type="submit" data-i18n="common.submit">Submit</button>
+</form>
+{% endblock %}

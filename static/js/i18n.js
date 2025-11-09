@@ -1,0 +1,42 @@
+window.I18N = {
+  en: {
+    "nav.home":"Home","nav.new_request":"New Request","nav.all_requests":"All Requests","nav.settings":"Settings",
+    "hero.title":"FACILITY AND INFRASTRUCTURE MANAGEMENT - HR Shared Services",
+    "hero.subtitle":"Absher Platform: Centralized HR & Shared Services Requests",
+    "card.new":"Submit a Request","card.new_desc":"Send HR-related requests and track status.",
+    "card.list":"Requests List","card.list_desc":"View, filter, and manage requests.",
+    "card.settings":"Settings","card.settings_desc":"Configure company DB path & uploads.",
+    "settings.title":"Platform Settings","settings.company_name":"Company Name","settings.company_db_path":"Company DB Path (SQLite)",
+    "settings.company_db_path_hint":"If set, requests will be stored here.",
+    "settings.upload_folder":"Uploads Folder",
+    "new.title":"New Request","new.employee_id":"Employee ID","new.employee_name":"Employee Name","new.cluster":"Cluster","new.department":"Department",
+    "new.category":"Category","new.request_type":"Request Type","new.details":"Request Details / Notes","new.attachments":"Attachments",
+    "list.title":"All Requests","list.req_no":"Req #","list.emp":"Employee","list.category":"Category","list.type":"Type","list.status":"Status",
+    "list.assignee":"Assignee","list.created":"Created",
+    "view.title":"Request Details","view.req_no":"Request No.","view.employee":"Employee","view.cluster":"Cluster","view.department":"Department",
+    "view.category":"Category","view.type":"Type","view.details":"Details","view.status":"Status","view.assignee":"Person in charge",
+    "view.duration":"SLA (days)","view.eta":"ETA","view.attachments":"Attachments","view.update":"Update Status","view.new_status":"New Status","view.assignee2":"Assignee",
+    "chat.title":"HR Assistant (AI)","chat.send":"Send",
+    "common.save":"Save","common.submit":"Submit","common.update":"Update","common.view":"View"
+  },
+  ar: {
+    "nav.home":"الصفحة الرئيسية","nav.new_request":"إنشاء طلب","nav.all_requests":"كل الطلبات","nav.settings":"الإعدادات",
+    "hero.title":"إدارة المرافق والبنية التحتية - خدمات الموارد البشرية المشتركة",
+    "hero.subtitle":"منصة أبشر: مركزية طلبات الموارد البشرية والخدمات المشتركة",
+    "card.new":"تقديم طلب","card.new_desc":"أرسل طلبات الموارد البشرية وتابع حالتها.",
+    "card.list":"قائمة الطلبات","card.list_desc":"عرض وإدارة الطلبات.",
+    "card.settings":"الإعدادات","card.settings_desc":"إعداد مسار قاعدة البيانات ومجلد المرفقات.",
+    "settings.title":"إعدادات المنصة","settings.company_name":"اسم الشركة","settings.company_db_path":"مسار قاعدة بيانات الشركة (SQLite)",
+    "settings.company_db_path_hint":"عند تحديده سيتم حفظ الطلبات هنا.",
+    "settings.upload_folder":"مجلد المرفقات",
+    "new.title":"طلب جديد","new.employee_id":"رقم الموظف","new.employee_name":"اسم الموظف","new.cluster":"القطاع/المجموعة","new.department":"القسم",
+    "new.category":"الفئة","new.request_type":"نوع الطلب","new.details":"تفاصيل الطلب / ملاحظات","new.attachments":"المرفقات",
+    "list.title":"كل الطلبات","list.req_no":"رقم الطلب","list.emp":"الموظف","list.category":"الفئة","list.type":"النوع","list.status":"الحالة",
+    "list.assignee":"المسؤول","list.created":"تاريخ الإنشاء",
+    "view.title":"تفاصيل الطلب","view.req_no":"رقم الطلب","view.employee":"الموظف","view.cluster":"القطاع","view.department":"القسم",
+    "view.category":"الفئة","view.type":"النوع","view.details":"التفاصيل","view.status":"الحالة","view.assignee":"المسؤول",
+    "view.duration":"زمن التنفيذ (أيام)","view.eta":"التاريخ المتوقع","view.attachments":"المرفقات","view.update":"تحديث الحالة","view.new_status":"حالة جديدة","view.assignee2":"المسؤول",
+    "chat.title":"مساعد الموارد البشرية (ذكاء اصطناعي)","chat.send":"إرسال",
+    "common.save":"حفظ","common.submit":"إرسال","common.update":"تحديث","common.view":"عرض"
+  }
+};

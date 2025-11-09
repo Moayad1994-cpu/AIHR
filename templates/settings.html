@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 data-i18n="settings.title">Platform Settings</h2>
+<form method="post" class="form">
+  <div class="grid-2">
+    <label>
+      <span data-i18n="settings.company_name">Company Name</span>
+      <input type="text" name="company_name" value="{{ settings.company_name if settings else '' }}" required>
+    </label>
+    <label>
+      <span data-i18n="settings.company_db_path">Company DB Path (SQLite)</span>
+      <input type="text" name="company_db_path" value="{{ settings.company_db_path if settings else '' }}" placeholder="/path/to/company.db">
+      <small data-i18n="settings.company_db_path_hint">If set, requests will be stored here.</small>
+    </label>
+    <label>
+      <span data-i18n="settings.upload_folder">Uploads Folder</span>
+      <input type="text" name="upload_folder" value="{{ settings.upload_folder if settings else '' }}">
+    </label>
+  </div>
+  <button class="btn primary" type="submit" data-i18n="common.save">Save</button>
+</form>
+{% endblock %}

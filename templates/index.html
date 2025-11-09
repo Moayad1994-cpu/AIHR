@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <h1 data-i18n="hero.title">FACILITY AND INFRASTRUCTURE MANAGEMENT - HR Shared Services</h1>
+  <p data-i18n="hero.subtitle">Absher Platform: Centralized HR & Shared Services Requests</p>
+  <div class="cards">
+    <a class="card" href="{{ url_for('new_request') }}">
+      <h3 data-i18n="card.new">Submit a Request</h3>
+      <p data-i18n="card.new_desc">Send HR-related requests and track status.</p>
+    </a>
+    <a class="card" href="{{ url_for('list_requests') }}">
+      <h3 data-i18n="card.list">Requests List</h3>
+      <p data-i18n="card.list_desc">View, filter, and manage requests.</p>
+    </a>
+    <a class="card" href="{{ url_for('settings') }}">
+      <h3 data-i18n="card.settings">Settings</h3>
+      <p data-i18n="card.settings_desc">Configure company DB path & uploads.</p>
+    </a>
+  </div>
+</section>
+{% endblock %}

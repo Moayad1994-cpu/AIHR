@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 data-i18n="list.title">All Requests</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th data-i18n="list.req_no">Req #</th>
+      <th data-i18n="list.emp">Employee</th>
+      <th data-i18n="list.category">Category</th>
+      <th data-i18n="list.type">Type</th>
+      <th data-i18n="list.status">Status</th>
+      <th data-i18n="list.assignee">Assignee</th>
+      <th data-i18n="list.created">Created</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for r in rows %}
+    <tr>
+      <td>{{ r.request_no }}</td>
+      <td>{{ r.employee_name }} ({{ r.employee_id }})</td>
+      <td>{{ r.category }}</td>
+      <td>{{ r.request_type }}</td>
+      <td>{{ r.status }}</td>
+      <td>{{ r.assignee }}</td>
+      <td>{{ r.created_at.split('T')[0] }}</td>
+      <td><a class="btn small" href="{{ url_for('view_request', request_no=r.request_no) }}" data-i18n="common.view">View</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

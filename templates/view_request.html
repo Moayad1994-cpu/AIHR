@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 data-i18n="view.title">Request Details</h2>
+<div class="card">
+  <div class="grid-2">
+    <div>
+      <p><strong data-i18n="view.req_no">Request No.</strong>: {{ req.request_no }}</p>
+      <p><strong data-i18n="view.employee">Employee</strong>: {{ req.employee_name }} ({{ req.employee_id }})</p>
+      <p><strong data-i18n="view.cluster">Cluster</strong>: {{ req.cluster }} | <strong data-i18n="view.department">Department</strong>: {{ req.department }}</p>
+      <p><strong data-i18n="view.category">Category</strong>: {{ req.category }} | <strong data-i18n="view.type">Type</strong>: {{ req.request_type }}</p>
+      <p><strong data-i18n="view.details">Details</strong>: {{ req.details }}</p>
+    </div>
+    <div>
+      <p><strong data-i18n="view.status">Status</strong>: {{ req.status }}</p>
+      <p><strong data-i18n="view.assignee">Person in charge</strong>: {{ req.assignee }}</p>
+      <p><strong data-i18n="view.duration">SLA (days)</strong>: {{ req.duration_days }}</p>
+      <p><strong data-i18n="view.eta">ETA</strong>: {{ eta }}</p>
+    </div>
+  </div>
+</div>
+
+{% if attachments %}
+<h3 data-i18n="view.attachments">Attachments</h3>
+<ul>
+  {% for a in attachments %}
+  <li><a href="{{ url_for('download_file', filename=a.path.split('/')[-1]) }}">{{ a.filename }}</a></li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+<h3 data-i18n="view.update">Update Status</h3>
+<form method="post" action="{{ url_for('update_status', request_no=req.request_no) }}" class="form">
+  <div class="grid-2">
+    <label>
+      <span data-i18n="view.new_status">New Status</span>
+      <select name="status">
+        {% for s in ["Submitted","Under Review","Processing","Completed"] %}
+        <option value="{{ s }}" {% if s==req.status %}selected{% endif %}>{{ s }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>
+      <span data-i18n="view.assignee2">Assignee</span>
+      <input type="text" name="assignee" value="{{ req.assignee }}">
+    </label>
+  </div>
+  <button class="btn primary" type="submit" data-i18n="common.update">Update</button>
+</form>
+{% endblock %}
