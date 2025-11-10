@@ -1,45 +1,77 @@
 {% extends "base.html" %}
+
+{% block title %}طلب جديد - Absher Platform{% endblock %}
+
 {% block content %}
-<h2 data-i18n="new.title">New Request</h2>
-<form method="post" enctype="multipart/form-data" class="form">
-  <div class="grid-2">
-    <label>
-      <span data-i18n="new.employee_id">Employee ID</span>
-      <input type="text" name="employee_id" required>
-    </label>
-    <label>
-      <span data-i18n="new.employee_name">Employee Name</span>
-      <input type="text" name="employee_name" required>
-    </label>
-    <label>
-      <span data-i18n="new.cluster">Cluster</span>
-      <input type="text" name="cluster">
-    </label>
-    <label>
-      <span data-i18n="new.department">Department</span>
-      <input type="text" name="department">
-    </label>
-    <label>
-      <span data-i18n="new.category">Category</span>
-      <select name="category" required>
-        {% for c in categories %}
-        <option value="{{ c }}">{{ c }}</option>
-        {% endfor %}
-      </select>
-    </label>
-    <label>
-      <span data-i18n="new.request_type">Request Type</span>
-      <input type="text" name="request_type" placeholder="e.g., Salary Certificate / Update Photo">
-    </label>
-  </div>
-  <label class="full">
-    <span data-i18n="new.details">Request Details / Notes</span>
-    <textarea name="details" rows="5" required></textarea>
-  </label>
-  <label class="full">
-    <span data-i18n="new.attachments">Attachments</span>
-    <input type="file" name="attachments" multiple>
-  </label>
-  <button class="btn primary" type="submit" data-i18n="common.submit">Submit</button>
-</form>
+<div class="page-container">
+    <div class="container">
+        <div class="card fade-in">
+            <div class="card-header">
+                <h1 class="card-title">تقديم طلب HR جديد</h1>
+                <p class="card-description">املأ النموذج أدناه لتقديم طلبك</p>
+            </div>
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data" class="form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="employee_id">رقم الموظف *</label>
+                            <input type="text" id="employee_id" name="employee_id" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="employee_name">اسم الموظف *</label>
+                            <input type="text" id="employee_name" name="employee_name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="cluster">المجموعة</label>
+                            <input type="text" id="cluster" name="cluster">
+                        </div>
+                        <div class="form-group">
+                            <label for="department">القسم</label>
+                            <input type="text" id="department" name="department">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category">الفئة *</label>
+                        <select id="category" name="category" required>
+                            <option value="">اختر الفئة</option>
+                            {% for cat in categories %}
+                            <option value="{{ cat }}">{{ cat }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="request_type">نوع الطلب *</label>
+                        <input type="text" id="request_type" name="request_type" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="details">التفاصيل *</label>
+                        <textarea id="details" name="details" rows="5" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="attachments">المرفقات</label>
+                        <input type="file" id="attachments" name="attachments" multiple>
+                        <small>يمكنك إرفاق ملفات PDF, Word, Excel, أو صور</small>
+                    </div>
+                    <!-- Add inside your form (no style changes): -->
+<label for="assignee">اسم المسؤول عن الطلب</label>
+<input id="assignee" name="assignee" type="text" placeholder="اكتب اسم المسؤول">
+                    <button type="submit" class="btn btn-primary btn-block">
+                        تقديم الطلب
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="5" y1="12" x2="19" y2="12"/>
+                            <polyline points="12 5 19 12 12 19"/>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
