@@ -1,22 +1,48 @@
 {% extends "base.html" %}
+
+{% block title %}الإعدادات - Absher Platform{% endblock %}
+
 {% block content %}
-<h2 data-i18n="settings.title">Platform Settings</h2>
-<form method="post" class="form">
-  <div class="grid-2">
-    <label>
-      <span data-i18n="settings.company_name">Company Name</span>
-      <input type="text" name="company_name" value="{{ settings.company_name if settings else '' }}" required>
-    </label>
-    <label>
-      <span data-i18n="settings.company_db_path">Company DB Path (SQLite)</span>
-      <input type="text" name="company_db_path" value="{{ settings.company_db_path if settings else '' }}" placeholder="/path/to/company.db">
-      <small data-i18n="settings.company_db_path_hint">If set, requests will be stored here.</small>
-    </label>
-    <label>
-      <span data-i18n="settings.upload_folder">Uploads Folder</span>
-      <input type="text" name="upload_folder" value="{{ settings.upload_folder if settings else '' }}">
-    </label>
-  </div>
-  <button class="btn primary" type="submit" data-i18n="common.save">Save</button>
-</form>
+<div class="page-container">
+    <div class="container">
+        <div class="card fade-in">
+            <div class="card-header">
+                <h1 class="card-title">الإعدادات</h1>
+                <p class="card-description">إدارة إعدادات الشركة والتكوين</p>
+            </div>
+            <div class="card-body">
+                <form method="POST" class="form">
+                    <div class="form-group">
+                        <label for="company_name">اسم الشركة</label>
+                        <input type="text" id="company_name" name="company_name" 
+                               value="{{ settings.company_name if settings else '' }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="company_db_path">مسار قاعدة البيانات</label>
+                        <input type="text" id="company_db_path" name="company_db_path" 
+                               value="{{ settings.company_db_path if settings else '' }}">
+                        <small>اتركه فارغاً لاستخدام قاعدة البيانات الافتراضية</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="upload_folder">مجلد التحميلات</label>
+                        <input type="text" id="upload_folder" name="upload_folder" 
+                               value="{{ settings.upload_folder if settings else '' }}">
+                        <small>المسار حيث يتم حفظ الملفات المرفقة</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+                            <polyline points="17 21 17 13 7 13 7 21"/>
+                            <polyline points="7 3 7 8 15 8"/>
+                        </svg>
+                        حفظ الإعدادات
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
