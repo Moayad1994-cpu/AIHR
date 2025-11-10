@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}تعديل الطلب{% endblock %}
+{% block content %}
+<div class="container">
+  <h1>تعديل الطلب #{{ req.request_no }}</h1>
+  <form method="post" class="form">
+    <label>Employee ID</label><input name="employee_id" value="{{ req.employee_id or '' }}">
+    <label>Employee Name</label><input name="employee_name" value="{{ req.employee_name or '' }}">
+    <label>Cluster</label><input name="cluster" value="{{ req.cluster or '' }}">
+    <label>Department</label><input name="department" value="{{ req.department or '' }}">
+    <label>Category</label><input name="category" value="{{ req.category or '' }}">
+    <label>Request Type</label><input name="request_type" value="{{ req.request_type or '' }}">
+    <label>Details</label><textarea name="details">{{ req.details or '' }}</textarea>
+    <label>اسم المسؤول</label><input name="assignee" value="{{ req.assignee or '' }}">
+    <label>مدة الإنجاز (أيام)</label><input name="duration_days" type="number" value="{{ req.duration_days or 0 }}">
+    <div style="margin-top:12px;">
+      <button class="btn btn-primary" type="submit">حفظ</button>
+      <a class="btn" href="{{ url_for('view_request', request_no=req.request_no) }}">إلغاء</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
