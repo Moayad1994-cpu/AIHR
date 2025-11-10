@@ -1,32 +1,71 @@
 {% extends "base.html" %}
+
+{% block title %}قائمة الطلبات - Absher Platform{% endblock %}
+
 {% block content %}
-<h2 data-i18n="list.title">All Requests</h2>
-<table class="table">
-  <thead>
-    <tr>
-      <th data-i18n="list.req_no">Req #</th>
-      <th data-i18n="list.emp">Employee</th>
-      <th data-i18n="list.category">Category</th>
-      <th data-i18n="list.type">Type</th>
-      <th data-i18n="list.status">Status</th>
-      <th data-i18n="list.assignee">Assignee</th>
-      <th data-i18n="list.created">Created</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for r in rows %}
-    <tr>
-      <td>{{ r.request_no }}</td>
-      <td>{{ r.employee_name }} ({{ r.employee_id }})</td>
-      <td>{{ r.category }}</td>
-      <td>{{ r.request_type }}</td>
-      <td>{{ r.status }}</td>
-      <td>{{ r.assignee }}</td>
-      <td>{{ r.created_at.split('T')[0] }}</td>
-      <td><a class="btn small" href="{{ url_for('view_request', request_no=r.request_no) }}" data-i18n="common.view">View</a></td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+<div class="page-container">
+    <div class="container">
+        <div class="page-header fade-in">
+            <div>
+                <h1 class="page-title">طلباتي</h1>
+                <p class="page-description">عرض وإدارة طلبات الموارد البشرية</p>
+            </div>
+            <a href="{{ url_for('new_request') }}" class="btn btn-primary">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19"/>
+                    <line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+                طلب جديد
+            </a>
+        </div>
+        {% if rows|length == 0 %}
+        <div class="empty-state">
+            <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+            </svg>
+            <h3>لا توجد طلبات بعد</h3>
+            <p>ابدأ بإنشاء طلبك الأول</p>
+            <a href="{{ url_for('new_request') }}" class="btn btn-primary">إنشاء طلب</a>
+        </div>
+        {% else %}
+        <div class="requests-list">
+            {% for req in rows %}
+            <div class="request-card modern-card slide-in-left" style="animation-delay: {{ loop.index0 * 0.1 }}s;">
+                <div class="request-header">
+                    <div class="request-info">
+                        <div class="request-title-row">
+                            <h3 class="request-title">طلب #{{ req.request_no }}</h3>
+                            <span class="badge badge-{{ req.status|lower|replace(' ', '-') }}">{{ req.status }}</span>
+                        </div>
+                        <p class="request-meta">{{ req.employee_name }} - {{ req.category }}</p>
+                    </div>
+                    <a href="{{ url_for('view_request', request_no=req.request_no) }}" class="btn btn-outline btn-sm">
+                        عرض التفاصيل
+                    </a>
+                </div>
+                <div class="request-details">
+                    <div class="detail-item">
+                        <span class="detail-label">النوع:</span>
+                        <span class="detail-value">{{ req.request_type }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">المسؤول:</span>
+                        <span class="detail-value">{{ req.assignee or 'غير محدد' }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">تاريخ الإنشاء:</span>
+                        <span class="detail-value">{{ req.created_at[:10] }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">المدة المتوقعة:</span>
+                        <span class="detail-value">{{ req.duration_days }} أيام</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}
