@@ -1,49 +1,161 @@
 {% extends "base.html" %}
+
+{% block title %}طلب #{{ req.request_no }} - Absher Platform{% endblock %}
+
 {% block content %}
-<h2 data-i18n="view.title">Request Details</h2>
-<div class="card">
-  <div class="grid-2">
-    <div>
-      <p><strong data-i18n="view.req_no">Request No.</strong>: {{ req.request_no }}</p>
-      <p><strong data-i18n="view.employee">Employee</strong>: {{ req.employee_name }} ({{ req.employee_id }})</p>
-      <p><strong data-i18n="view.cluster">Cluster</strong>: {{ req.cluster }} | <strong data-i18n="view.department">Department</strong>: {{ req.department }}</p>
-      <p><strong data-i18n="view.category">Category</strong>: {{ req.category }} | <strong data-i18n="view.type">Type</strong>: {{ req.request_type }}</p>
-      <p><strong data-i18n="view.details">Details</strong>: {{ req.details }}</p>
+<div class="page-container">
+    <div class="container">
+        <a href="{{ url_for('list_requests') }}" class="btn btn-ghost mb-4">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="19" y1="12" x2="5" y2="12"/>
+                <polyline points="12 19 5 12 12 5"/>
+            </svg>
+            العودة للطلبات
+        </a>
+
+        <div class="card fade-in">
+            <div class="card-header">
+                <div class="request-title-row">
+                    <h1 class="card-title">طلب #{{ req.request_no }}</h1>
+                    <span class="badge badge-{{ req.status|lower|replace(' ', '-') }}">{{ req.status }}</span>
+                </div>
+                <p class="card-description">تم التقديم في {{ req.created_at[:10] }}</p>
+            </div>
+
+            <div class="card-body">
+                <!-- Employee Information -->
+                <div class="section">
+                    <h2 class="section-title">معلومات الموظف</h2>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">رقم الموظف</span>
+                            <span class="info-value">{{ req.employee_id }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">اسم الموظف</span>
+                            <span class="info-value">{{ req.employee_name }}</span>
+                        </div>
+                        {% if req.cluster %}
+                        <div class="info-item">
+                            <span class="info-label">المجموعة</span>
+                            <span class="info-value">{{ req.cluster }}</span>
+                        </div>
+                        {% endif %}
+                        {% if req.department %}
+                        <div class="info-item">
+                            <span class="info-label">القسم</span>
+                            <span class="info-value">{{ req.department }}</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Request Details -->
+                <div class="section">
+                    <h2 class="section-title">تفاصيل الطلب</h2>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">الفئة</span>
+                            <span class="info-value">{{ req.category }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">نوع الطلب</span>
+                            <span class="info-value">{{ req.request_type }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">المسؤول</span>
+                            <span class="info-value">{{ req.assignee or 'غير محدد' }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">المدة المتوقعة</span>
+                            <span class="info-value">{{ req.duration_days }} يوم</span>
+                        </div>
+                        <div class="info-item full-width">
+                            <span class="info-label">التفاصيل</span>
+                            <div class="details-box">{{ req.details }}</div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">الحالة</span>
+                            <span class="info-value">{{ req.status }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">تاريخ الإنشاء</span>
+                            <span class="info-value">{{ req.created_at[:10] }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">تاريخ التحديث</span>
+                            <span class="info-value">{{ req.updated_at[:10] }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">تاريخ الإنجاز المتوقع</span>
+                            <span class="info-value">{{ eta }}</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Attachments -->
+                {% if attachments|length > 0 %}
+                <div class="section">
+                    <h2 class="section-title">المرفقات</h2>
+                    <div class="attachments-list">
+                        {% for att in attachments %}
+                        <div class="attachment-item">
+                            <svg class="attachment-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                            </svg>
+                            <span class="attachment-name">{{ att.filename }}</span>
+                            <div class="attachment-actions">
+                                <a href="{{ url_for('view_file', filename=att.serve_name) }}" target="_blank" class="btn btn-ghost btn-sm">
+                                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                    عرض
+                                </a>
+                                <a href="{{ url_for('download_file', filename=att.serve_name) }}" class="btn btn-outline btn-sm">
+                                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                        <polyline points="7 10 12 15 17 10"/>
+                                        <line x1="12" y1="15" x2="12" y2="3"/>
+                                    </svg>
+                                    تحميل
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Update -->
+                <div class="section">
+                    <h2 class="section-title">تحديث الطلب</h2>
+                    <form method="POST" action="{{ url_for('update_status', request_no=req.request_no) }}" class="form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="status">الحالة</label>
+                                <select id="status" name="status">
+                                    <option value="Submitted" {% if req.status == 'Submitted' %}selected{% endif %}>مقدم</option>
+                                    <option value="In Progress" {% if req.status == 'In Progress' %}selected{% endif %}>قيد التنفيذ</option>
+                                    <option value="Completed" {% if req.status == 'Completed' %}selected{% endif %}>مكتمل</option>
+                                    <option value="Rejected" {% if req.status == 'Rejected' %}selected{% endif %}>مرفوض</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="assignee">المسؤول</label>
+                                <select id="assignee" name="assignee">
+                                    <option value="" {% if not req.assignee %}selected{% endif %}>غير محدد</option>
+                                    <option value="HR Team" {% if req.assignee == 'HR Team' %}selected{% endif %}>HR Team</option>
+                                    <option value="IT Team" {% if req.assignee == 'IT Team' %}selected{% endif %}>IT Team</option>
+                                    <option value="Logistics Team" {% if req.assignee == 'Logistics Team' %}selected{% endif %}>Logistics Team</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">تحديث الطلب</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <div>
-      <p><strong data-i18n="view.status">Status</strong>: {{ req.status }}</p>
-      <p><strong data-i18n="view.assignee">Person in charge</strong>: {{ req.assignee }}</p>
-      <p><strong data-i18n="view.duration">SLA (days)</strong>: {{ req.duration_days }}</p>
-      <p><strong data-i18n="view.eta">ETA</strong>: {{ eta }}</p>
-    </div>
-  </div>
 </div>
-
-{% if attachments %}
-<h3 data-i18n="view.attachments">Attachments</h3>
-<ul>
-  {% for a in attachments %}
-  <li><a href="{{ url_for('download_file', filename=a.path.split('/')[-1]) }}">{{ a.filename }}</a></li>
-  {% endfor %}
-</ul>
-{% endif %}
-
-<h3 data-i18n="view.update">Update Status</h3>
-<form method="post" action="{{ url_for('update_status', request_no=req.request_no) }}" class="form">
-  <div class="grid-2">
-    <label>
-      <span data-i18n="view.new_status">New Status</span>
-      <select name="status">
-        {% for s in ["Submitted","Under Review","Processing","Completed"] %}
-        <option value="{{ s }}" {% if s==req.status %}selected{% endif %}>{{ s }}</option>
-        {% endfor %}
-      </select>
-    </label>
-    <label>
-      <span data-i18n="view.assignee2">Assignee</span>
-      <input type="text" name="assignee" value="{{ req.assignee }}">
-    </label>
-  </div>
-  <button class="btn primary" type="submit" data-i18n="common.update">Update</button>
-</form>
 {% endblock %}
